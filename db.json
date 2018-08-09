@@ -1,0 +1,25 @@
+{
+  "cars": [
+    {
+      "name": "1",
+      "date": "09.08.18",
+      "model": "1",
+      "isSolid": false,
+      "id": 1
+    },
+    {
+      "name": "2",
+      "date": "09.08.18",
+      "model": "2",
+      "isSolid": false,
+      "id": 2
+    },
+    {
+      "name": "3",
+      "date": "09.08.18",
+      "model": "3",
+      "isSolid": false,
+      "id": 3
+    }
+  ]
+}
