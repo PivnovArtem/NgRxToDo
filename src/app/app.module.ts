@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { StoreModule } from '@ngrx/store';
+import {ActionReducer, StoreModule} from '@ngrx/store';
 
 import { AppComponent } from './app.component';
 import { CarsFormComponent } from './cars-form/cars-form.component';
@@ -11,6 +11,17 @@ import {CarsService} from './cars.service';
 import {HttpModule} from '@angular/http';
 import {EffectsModule} from '@ngrx/effects';
 import {CarsEffect} from './redux/cars.effect';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { storeLogger } from 'ngrx-store-logger';
+import { AppState } from './redux/app.state';
+
+export function logger(reducer: ActionReducer<AppState>): any {
+  // default, no options
+  return storeLogger()(reducer);
+}
+
+export const metaReducers = environment.production ? [] : [logger];
 
 
 @NgModule({
@@ -20,11 +31,17 @@ import {CarsEffect} from './redux/cars.effect';
     CarComponent
   ],
   imports: [
+    StoreModule.forRoot({carPage: carsReducer},
+      {metaReducers}
+      ),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production
+    }),
     BrowserModule,
     FormsModule,
     HttpModule,
     EffectsModule.forRoot([CarsEffect]),
-    StoreModule.forRoot({carPage: carsReducer})
   ],
   providers: [CarsService],
   bootstrap: [AppComponent]
