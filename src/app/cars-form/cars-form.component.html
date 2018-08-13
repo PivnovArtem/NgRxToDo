@@ -1,18 +1,4 @@
-<!--<div class="ui-g-12 ui-md-4">-->
-  <!--<div class="ui-inputgroup">-->
-    <!--<span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>-->
-    <!--<input type="text" pInputText placeholder="Username">-->
-  <!--</div>-->
-<!--</div>-->
-
-<!--<div class="ui-g-12 ui-md-4">-->
-  <!--<div class="ui-inputgroup">-->
-    <!--<span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>-->
-    <!--<input type="text" pInputText placeholder="Username">-->
-  <!--</div>-->
-<!--</div>-->
-
-<div class="form-group ui-g-12 ui-md-4 ui-inputgroup">
+<div class="form-group">
   <label for="car-name">Car name</label>
   <input type="text"
          class="form-control"
@@ -32,3 +18,64 @@
 
 <button type="button" (click)="onAdd()" class="btn btn-outline-primary">Add Car</button>
 <button type="button" (click)="onLoad()" class="btn btn-outline-warning">Load Cars</button>
+
+
+<h3>Drag and Drop to Table</h3>
+<div class="ui-g">
+  <!--<app-car-->
+  <!--[car]="c"-->
+  <!--*ngFor="let c of (carState | async).cars"-->
+  <!--&gt;</app-car>-->
+
+  <!--(carState | async).cars-->
+
+  <div class="ui-g-12 ui-md-6 ui-g-nopad drag-column">
+    <ul style="margin:0;padding:0">
+      <li
+        *ngFor="let car of (carState | async).cars" class="ui-helper-clearfix" pDraggable="cars"
+        (onDragStart)="dragStart($event, car)" (onDragEnd)="dragEnd($event)">
+        <div *ngIf="!car.isSolid">
+          <i class="fa fa-arrows fa-2x" style="float:right;margin-top:8px"></i>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Intel-logo.svg/120px-Intel-logo.svg.png"
+               style="float:left" draggable="false">
+          <div style="margin:8px 0 0 8px;float:left">{{car.name}} - {{car.date}}</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!--<div class="ui-g-12 ui-md-6 ui-g-nopad drag-column">-->
+  <!--<ul style="margin:0;padding:0">-->
+  <!--<li *ngFor="let car of availableCars" class="ui-helper-clearfix" pDraggable="cars"-->
+  <!--(onDragStart)="dragStart($event, car)" (onDragEnd)="dragEnd($event)">-->
+  <!--<i class="fa fa-arrows fa-2x" style="float:right;margin-top:8px"></i>-->
+  <!--<img src="assets/showcase/images/demo/car/{{car.model}}.png" style="float:left" draggable="false">-->
+  <!--<div style="margin:8px 0 0 8px;float:left">{{car.name}} - {{car.date}}</div>-->
+  <!--</li>-->
+  <!--</ul>-->
+  <!--</div>-->
+
+  <div class="ui-g-12 ui-md-6 drop-column" pDroppable="cars"
+       (onDrop)="drop($event)" [ngClass]="{'ui-highlight-car':selectedCars}">
+    <p-table [value]="(carState | async).cars">
+      <ng-template pTemplate="header">
+          <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Model</th>
+            <th>isSolid</th>
+          </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-car>
+          <tr *ngIf="car.isSolid">
+          <!--<tr>-->
+            <td>{{car.name}}</td>
+            <td>{{car.date}}</td>
+            <td>{{car.model}}</td>
+            <td>{{car.isSolid}}</td>
+          </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

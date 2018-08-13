@@ -15,6 +15,13 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { storeLogger } from 'ngrx-store-logger';
 import { AppState } from './redux/app.state';
+import {AccordionModule} from 'primeng/accordion';
+import {MenuItem} from 'primeng/api';
+import {DragDropModule} from 'primeng/dragdrop';
+import {PanelModule} from 'primeng/panel';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {TableModule} from 'primeng/table';
+
 
 export function logger(reducer: ActionReducer<AppState>): any {
   // default, no options
@@ -39,7 +46,12 @@ export const metaReducers = environment.production ? [] : [logger];
       logOnly: environment.production
     }),
     BrowserModule,
+    AccordionModule,
+    DragDropModule,
+    PanelModule,
     FormsModule,
+    TableModule,
+    BrowserAnimationsModule,
     HttpModule,
     EffectsModule.forRoot([CarsEffect]),
   ],
